@@ -80,12 +80,15 @@ function venueLinks(item) {
   return `<div class="card-venues"><span>Try it at</span><div>${item.where.map((spot) => `<a class="venue-link" href="${googleMapsUrl(item, spot)}" target="_blank" rel="noopener noreferrer">${escapeHtml(spot.name)} <small>${spot.nearest ? "Find nearby" : "Directions"} ↗</small></a>`).join("")}</div></div>`;
 }
 
-function thingsToDo(item) {
+function thingsToDo(item, collapsible = false) {
   if (!item.thingsToDo?.length) return "";
   const entries = item.thingsToDo.map((entry) => {
     const activity = typeof entry === "string" ? { title: entry } : entry;
     return `<li><b>${escapeHtml(activity.title)}</b>${activity.note ? `<span>${escapeHtml(activity.note)}</span>` : ""}</li>`;
   }).join("");
+  if (collapsible) {
+    return `<details class="things-to-do"><summary>Things to do here <small>${item.thingsToDo.length}</small></summary><ul>${entries}</ul></details>`;
+  }
   return `<div class="things-to-do"><span>Do while you’re here</span><ul>${entries}</ul></div>`;
 }
 
@@ -122,7 +125,7 @@ function render() {
     const location = locationsFor(item)[0];
     const actions = document.createElement("div");
     actions.className = "card-actions";
-    actions.innerHTML = `${thingsToDo(item)}${venueLinks(item)}${item.type === "food" && item.where?.length ? "" : mapsLink(item, location, "Open in Google Maps")}`;
+    actions.innerHTML = `${thingsToDo(item, true)}${venueLinks(item)}${item.type === "food" && item.where?.length ? "" : mapsLink(item, location, "Open in Google Maps")}`;
     card.append(actions);
     list.append(card);
     locationsFor(item).forEach((location) => {
