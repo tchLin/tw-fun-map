@@ -45,7 +45,7 @@ function escapeHtml(value = "") {
 
 function locationsFor(item) {
   if (item.type === "food") return [];
-  const direct = item.coordinates && !item.chain ? [{ name: item.title, city: item.city, coordinates: item.coordinates }] : [];
+  const direct = item.coordinates && !item.chain ? [{ name: item.title, city: item.city, coordinates: item.coordinates, mapsQuery: item.mapsQuery }] : [];
   const venues = (item.where || []).filter((spot) => spot.coordinates && !spot.chain);
   return [...direct, ...venues];
 }
@@ -82,8 +82,9 @@ function googleMapsUrl(item, location) {
   return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
 }
 
-function mapsLink(item, location, label = "Directions") {
-  return `<a class="maps-link" href="${googleMapsUrl(item, location)}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`;
+function mapsLink(item, location, label) {
+  const action = label || (location?.mapsQuery ? "View in Google Maps" : "Directions");
+  return `<a class="maps-link" href="${googleMapsUrl(item, location)}" target="_blank" rel="noopener noreferrer">${action} <span aria-hidden="true">↗</span></a>`;
 }
 
 function venueLinks(item) {
