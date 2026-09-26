@@ -6,12 +6,12 @@ Map labels default to English. Friends can use the `EN / 中文` switch to use t
 
 ## Add recommendations
 
-Open `recommendations.js` and add objects to the `recommendations` array. There are four supported types:
+Open `recommendations.js` and add objects to the `recommendations` array. There are two supported types:
 
 ```js
 {
   id: "unique-id",
-  type: "place", // "place", "activity", "food", or "pass"
+  type: "place", // "place" or "food"
   title: "A great place",
   city: "Hualien",
   coordinates: [23.9911, 121.6112], // latitude, longitude; optional
@@ -48,38 +48,12 @@ For a chain with many branches, use a Google Maps search instead of one coordina
 }
 ```
 
-Places can include a small list of suggestions for the location itself:
-
-```js
-{
-  type: "place",
-  title: "Taipei 101",
-  city: "Taipei",
-  thingsToDo: [
-    { title: "Visit the observatory", note: "Best on a clear day." },
-    { title: "Browse the design shops" },
-  ],
-}
-```
 
 The map has a **Locate me** control. It asks the visitor’s browser for permission only after they click it, then shows an accuracy circle around their reported location.
 
 For an idea associated only with a city, omit `coordinates`. It will stay in the filtered list and zoom to the city when selected.
 
 Every recommendation gets an **Open in Google Maps** link automatically. Coordinates make that link open navigation to the exact point; entries without coordinates search for the title and city instead.
-
-Use `type: "pass"` for a friendly heads-up (the 避雷 list). Include `alternative` when you have a better option to suggest:
-
-```js
-{
-  id: "example-pass",
-  type: "pass",
-  title: "An overpriced tourist stop",
-  city: "Tainan",
-  description: "Fine if you are nearby, but not worth a special trip.",
-  alternative: "Go to your favorite local market instead.",
-}
-```
 
 ## Publish on GitHub Pages
 
