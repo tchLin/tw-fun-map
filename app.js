@@ -26,6 +26,7 @@ const baseLayers = {
 let activeBaseLayer = baseLayers.en.addTo(map);
 
 const markers = L.layerGroup().addTo(map);
+const markerByItemId = new Map();
 const list = document.querySelector("#recommendation-list");
 const search = document.querySelector("#search");
 const locateButton = document.querySelector("#locate-me");
@@ -108,10 +109,19 @@ function matches(item) {
 function focusItem(item) {
   const location = locationsFor(item)[0];
   map.flyTo(location?.coordinates || cityCoordinates[item.city] || cityCoordinates.Taiwan, location ? 13 : 8, { duration: 0.75 });
+  if (window.matchMedia("(max-width: 900px)").matches) {
+    sidebar.classList.remove("is-open");
+    mobileToggle.setAttribute("aria-expanded", "false");
+    mobileToggle.textContent = "Browse recommendations";
+  }
+  if (markerByItemId.has(item.id)) {
+    window.setTimeout(() => markerByItemId.get(item.id).openPopup(), 500);
+  }
 }
 
 function render() {
   markers.clearLayers();
+  markerByItemId.clear();
   const visible = recommendations.filter(matches);
   list.innerHTML = visible.length ? "" : '<p class="empty">No matches yet. Try a different search.</p>';
   visible.forEach((item) => {
@@ -129,7 +139,8 @@ function render() {
     card.append(actions);
     list.append(card);
     locationsFor(item).forEach((location) => {
-      L.marker(location.coordinates, { icon: markerIcon(item.type), title: item.title }).bindPopup(popup(item, location), { maxWidth: 260 }).addTo(markers);
+      const marker = L.marker(location.coordinates, { icon: markerIcon(item.type), title: item.title }).bindPopup(popup(item, location), { maxWidth: 260 }).addTo(markers);
+      if (!markerByItemId.has(item.id)) markerByItemId.set(item.id, marker);
     });
   });
 }
