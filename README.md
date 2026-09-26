@@ -35,6 +35,17 @@ For food, add `where` to list venues. Each venue with coordinates appears as an 
 }
 ```
 
+For a chain with many branches, use a Google Maps search instead of one coordinate. The card will show a **Find nearby** link, and Google Maps will choose nearby branches using the friend’s own location:
+
+```js
+{
+  name: "50嵐",
+  city: "Taiwan",
+  mapsQuery: "50嵐 Taiwan",
+  nearest: true,
+}
+```
+
 For an idea associated only with a city, omit `coordinates`. It will stay in the filtered list and zoom to the city when selected.
 
 Every recommendation gets an **Open in Google Maps** link automatically. Coordinates make that link open navigation to the exact point; entries without coordinates search for the title and city instead.

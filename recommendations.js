@@ -1,6 +1,7 @@
 /* Add recommendations here. Use type: "place", "activity", "food", or "pass".
    coordinates are [latitude, longitude] and are optional for city-only ideas.
    Food can have a "where" array; venues with coordinates become map pins.
+   For a chain, use mapsQuery and nearest: true to give friends a “Find nearby” link.
    Use rating: 1–5 to mark how must-go a positive recommendation is.
    A "pass" can include an "alternative" with a kinder suggestion. */
 const recommendations = [
@@ -32,7 +33,10 @@ const recommendations = [
     description: "A food recommendation can be broad and list places to get it.",
     rating: 5,
     tags: ["drink", "sweet"],
-    where: [{ name: "Add your favorite boba shop", city: "Taipei", coordinates: [25.0478, 121.517] }],
+    where: [
+      { name: "Add a favorite boba shop", city: "Taipei", coordinates: [25.0478, 121.517] },
+      { name: "Add a boba chain", city: "Taiwan", mapsQuery: "Boba chain Taiwan", nearest: true },
+    ],
   },
   {
     id: "example-pass",

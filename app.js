@@ -49,6 +49,9 @@ function ratingStars(rating) {
 }
 
 function googleMapsUrl(item, location) {
+  if (location?.mapsQuery) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.mapsQuery)}`;
+  }
   const destination = location?.coordinates
     ? location.coordinates.join(",")
     : `${location?.name || item.title}, ${location?.city || item.city}, Taiwan`;
@@ -59,9 +62,14 @@ function mapsLink(item, location, label = "Directions") {
   return `<a class="maps-link" href="${googleMapsUrl(item, location)}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`;
 }
 
+function venueLinks(item) {
+  if (item.type !== "food" || !item.where?.length) return "";
+  return `<div class="card-venues"><span>Try it at</span><div>${item.where.map((spot) => `<a class="venue-link" href="${googleMapsUrl(item, spot)}" target="_blank" rel="noopener noreferrer">${escapeHtml(spot.name)} <small>${spot.nearest ? "Find nearby" : "Directions"} ↗</small></a>`).join("")}</div></div>`;
+}
+
 function popup(item, location) {
   const locationLine = location.name === item.title ? "" : `<p class="popup-location">Try it at ${escapeHtml(location.name)} · ${escapeHtml(location.city)}</p>`;
-  const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)} ${mapsLink(item, spot, "Map")}</span>`).join("")}</div>` : "";
+  const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)} ${mapsLink(item, spot, spot.nearest ? "Find nearby" : "Map")}</span>`).join("")}</div>` : "";
   const alternative = item.alternative ? `<div class="popup-alternative"><b>Try this instead</b><span>${escapeHtml(item.alternative)}</span></div>` : "";
   return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${ratingStars(item.rating)}${locationLine}<p>${escapeHtml(item.description || "")}</p>${alternative}${where}${mapsLink(item, location)}</article>`;
 }
@@ -92,7 +100,7 @@ function render() {
     const location = locationsFor(item)[0];
     const actions = document.createElement("div");
     actions.className = "card-actions";
-    actions.innerHTML = mapsLink(item, location, "Open in Google Maps");
+    actions.innerHTML = `${venueLinks(item)}${item.type === "food" && item.where?.length ? "" : mapsLink(item, location, "Open in Google Maps")}`;
     card.append(actions);
     list.append(card);
     locationsFor(item).forEach((location) => {
