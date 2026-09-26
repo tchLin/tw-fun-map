@@ -28,9 +28,6 @@ h1 em { color:var(--pink); }
 .food .card-icon { color:#493405; background:var(--yellow); }
 .recommendation-card small, .recommendation-card strong, .recommendation-card em { display:block; }
 .recommendation-card strong { margin:3px 0; font:700 13px Manrope,sans-serif; }
-.rating { display:block; margin:0 0 5px; color:#d6d1c4; font:12px/1 sans-serif; letter-spacing:1px; white-space:nowrap; }
-.rating > span { margin-right:5px; color:#8a8b83; font:500 9px "DM Mono",monospace; letter-spacing:.04em; text-transform:uppercase; }
-.rating b { color:var(--yellow); font-weight:normal; }
 .recommendation-card em { display:-webkit-box; overflow:hidden; color:#6c716d; font:11px/1.4 Manrope,sans-serif; font-style:normal; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
 .card-actions { padding:0 12px 11px 51px; }.maps-link { display:inline-flex; align-items:center; gap:3px; color:#1d718f; font:600 10px Manrope,sans-serif; text-decoration:none; }.maps-link:hover { color:#15566c; text-decoration:underline; }.maps-link span { font-size:12px; }
 .card-venues { display:grid; gap:5px; }.card-venues > span { color:#7d827d; font:500 9px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }.card-venues > div { display:flex; flex-wrap:wrap; gap:5px; }.venue-link { display:inline-flex; gap:5px; align-items:center; max-width:100%; padding:5px 7px; border:1px solid #d6dfdc; border-radius:5px; color:#276b81; background:#f5fbfb; font:600 10px Manrope,sans-serif; text-decoration:none; }.venue-link:hover { border-color:#78adbd; background:#edf7f8; }.venue-link small { color:#5e8a96; font:500 8px "DM Mono",monospace; letter-spacing:0; text-transform:none; }
@@ -48,7 +45,6 @@ h1 em { color:var(--pink); }
 .map-marker.easter-egg { color:#5b4104; background:#f4c64f; box-shadow:0 2px 10px #9c741a77; }
 .leaflet-popup-content-wrapper { border-radius:10px; }.leaflet-popup-content { margin:15px 17px; }
 .popup h2 { margin:3px 0 6px; font:600 20px/1.05 Fraunces,Georgia,serif; }.popup p:not(.popup-type) { margin:0; color:#606863; font-size:12px; line-height:1.5; }
-.popup .rating { display:block; margin:-1px 0 7px; }
 .popup-location { color:var(--blue)!important; font-size:11px!important; }.popup-where { display:grid; gap:3px; margin-top:10px; padding-top:9px; border-top:1px solid var(--line); color:#626b66; font-size:11px; }.popup-where b { color:var(--ink); font-size:11px; }
 #mobile-toggle { display:none; }
 @media (max-width:900px) {

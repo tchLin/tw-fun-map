@@ -1,33 +1,32 @@
 /*
   Add recommendations here. Use type: "place" or "food".
-  coordinates are [latitude, longitude]. Use rating: 1–5 for your personal
-  must-go score; leave it out when you have not decided yet.
+  coordinates are [latitude, longitude].
 */
 const recommendations = [
   // Taipei
   {
     id: "sun-yat-sen-memorial-hall", type: "place", title: "Sun Yat-sen Memorial Hall 國父紀念館", city: "Taipei", coordinates: [25.0403, 121.5603],
-    description: "A landmark hall and park with a classic Taipei 101 view.", rating: 3, tags: ["landmark", "history", "park"],
+    description: "A landmark hall and park with a classic Taipei 101 view.", tags: ["landmark", "history", "park"],
   },
   {
     id: "dadaocheng", type: "place", title: "Dadaocheng 大稻埕", city: "Taipei", coordinates: [25.0584, 121.5119], mapsQuery: "Dadaocheng, Taipei, Taiwan",
-    description: "Old Taipei storefronts, riverfront wandering, and a slower pace.", rating: 5, tags: ["historic", "riverfront", "walk"],
+    description: "Old Taipei storefronts, riverfront wandering, and a slower pace.", tags: ["historic", "riverfront", "walk"],
   },
   {
     id: "songshan-cultural-park", type: "place", title: "Songshan Cultural and Creative Park 松菸", city: "Taipei", coordinates: [25.0441, 121.5601],
-    description: "A former tobacco factory turned into a creative park.", rating: 4, tags: ["design", "art", "shops"],
+    description: "A former tobacco factory turned into a creative park.", tags: ["design", "art", "shops"],
   },
   {
     id: "xinyi-district", type: "place", title: "Xinyi District 信義", city: "Taipei", coordinates: [25.0333, 121.5669], mapsQuery: "Xinyi District, Taipei, Taiwan",
-    description: "Taipei’s polished shopping, dining, and skyline district.", rating: 4, tags: ["shopping", "city", "night"],
+    description: "Taipei’s polished shopping, dining, and skyline district.", tags: ["shopping", "city", "night"],
   },
   {
     id: "tamsui", type: "place", title: "Tamsui 淡水", city: "New Taipei", coordinates: [25.1813, 121.4531], mapsQuery: "Tamsui District, New Taipei City, Taiwan",
-    description: "A waterfront day trip at the northern end of the MRT Red Line.", rating: 3, tags: ["waterfront", "sunset", "day trip"],
+    description: "A waterfront day trip at the northern end of the MRT Red Line.", tags: ["waterfront", "sunset", "day trip"],
   },
   {
     id: "jiufen", type: "place", title: "Jiufen 九份", city: "New Taipei", coordinates: [25.1117, 121.8451], mapsQuery: "Jiufen, New Taipei City, Taiwan",
-    description: "A hillside former mining town with narrow lanes and sea views.", rating: 5, tags: ["mountain", "old street", "day trip"],
+    description: "A hillside former mining town with narrow lanes and sea views.", tags: ["mountain", "old street", "day trip"],
   },
   {
     id: "dihua-street", type: "place", title: "Dihua Street 迪化街", city: "Taipei", coordinates: [25.0562, 121.5102], mapsQuery: "Dihua Street, Taipei, Taiwan",

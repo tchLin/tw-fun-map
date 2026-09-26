@@ -16,7 +16,6 @@ Open `recommendations.js` and add objects to the `recommendations` array. There 
   city: "Hualien",
   coordinates: [23.9911, 121.6112], // latitude, longitude; optional
   description: "Why it is worth a visit.",
-  rating: 5, // optional: 1–5, from nice-to-have to must-go
   tags: ["nature", "day trip"],
 }
 ```

@@ -66,12 +66,6 @@ function easterEggIcon() {
   });
 }
 
-function ratingStars(rating) {
-  const value = Number.isInteger(rating) && rating >= 1 && rating <= 5 ? rating : null;
-  if (!value) return "";
-  return `<span class="rating" aria-label="${value} out of 5 must-go rating" title="${value} out of 5 must-go"><span>Must-go</span><b>${"★".repeat(value)}</b>${"★".repeat(5 - value)}</span>`;
-}
-
 function googleMapsUrl(item, location) {
   if (location?.mapsQuery) {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.mapsQuery)}`;
@@ -95,7 +89,7 @@ function venueLinks(item) {
 function popup(item, location) {
   const locationLine = location.name === item.title ? "" : `<p class="popup-location">Try it at ${escapeHtml(location.name)} · ${escapeHtml(location.city)}</p>`;
   const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)} ${mapsLink(item, spot, spot.nearest ? "Find nearby" : "Map")}</span>`).join("")}</div>` : "";
-  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${ratingStars(item.rating)}${locationLine}<p>${escapeHtml(item.description || "")}</p>${where}${mapsLink(item, location)}</article>`;
+  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${locationLine}<p>${escapeHtml(item.description || "")}</p>${where}${mapsLink(item, location)}</article>`;
 }
 
 function matches(item) {
@@ -127,7 +121,7 @@ function render() {
     card.className = `recommendation-card ${item.type}`;
     const primary = document.createElement("button");
     primary.className = "card-main";
-    primary.innerHTML = `<span class="card-icon">${typeIcons[item.type]}</span><span class="card-copy"><small>${typeLabels[item.type]} · ${escapeHtml(item.city)}</small><strong>${escapeHtml(item.title)}</strong>${ratingStars(item.rating)}<em>${escapeHtml(item.description || "Add a note")}</em></span>`;
+    primary.innerHTML = `<span class="card-icon">${typeIcons[item.type]}</span><span class="card-copy"><small>${typeLabels[item.type]} · ${escapeHtml(item.city)}</small><strong>${escapeHtml(item.title)}</strong><em>${escapeHtml(item.description || "Add a note")}</em></span>`;
     primary.addEventListener("click", () => focusItem(item));
     card.append(primary);
     const location = locationsFor(item)[0];
