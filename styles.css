@@ -35,6 +35,7 @@ h1 em { color:var(--pink); }
 .recommendation-card em { display:-webkit-box; overflow:hidden; color:#6c716d; font:11px/1.4 Manrope,sans-serif; font-style:normal; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
 .card-actions { padding:0 12px 11px 51px; }.maps-link { display:inline-flex; align-items:center; gap:3px; color:#1d718f; font:600 10px Manrope,sans-serif; text-decoration:none; }.maps-link:hover { color:#15566c; text-decoration:underline; }.maps-link span { font-size:12px; }
 .card-venues { display:grid; gap:5px; }.card-venues > span { color:#7d827d; font:500 9px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }.card-venues > div { display:flex; flex-wrap:wrap; gap:5px; }.venue-link { display:inline-flex; gap:5px; align-items:center; max-width:100%; padding:5px 7px; border:1px solid #d6dfdc; border-radius:5px; color:#276b81; background:#f5fbfb; font:600 10px Manrope,sans-serif; text-decoration:none; }.venue-link:hover { border-color:#78adbd; background:#edf7f8; }.venue-link small { color:#5e8a96; font:500 8px "DM Mono",monospace; letter-spacing:0; text-transform:none; }
+.things-to-do { display:grid; gap:5px; margin-bottom:9px; padding:8px; border-radius:6px; background:#f7f4ed; }.things-to-do > span { color:#7d827d; font:500 9px "DM Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }.things-to-do ul { display:grid; gap:4px; margin:0; padding:0; list-style:none; }.things-to-do li { position:relative; display:grid; gap:1px; padding-left:7px; color:#5f6761; font-size:10px; }.things-to-do li::before { content:"·"; position:absolute; left:0; color:var(--pink); }.things-to-do li b { color:var(--ink); font-size:10px; }.things-to-do li span { font-size:9px; }
 .empty { color:#69706b; font-size:13px; }
 .sidebar-footer { margin:15px 0 0; color:#92958c; font:10px "DM Mono",monospace; }
 .map-panel, #map { height:100%; }
@@ -51,8 +52,8 @@ h1 em { color:var(--pink); }
 .popup .rating { display:block; margin:-1px 0 7px; }
 .popup-location { color:var(--blue)!important; font-size:11px!important; }.popup-where, .popup-alternative { display:grid; gap:3px; margin-top:10px; padding-top:9px; border-top:1px solid var(--line); color:#626b66; font-size:11px; }.popup-where b, .popup-alternative b { color:var(--ink); font-size:11px; }.popup-alternative b { color:#5d5664; }
 #mobile-toggle { display:none; }
-@media (max-width:720px) {
-  .app-shell { display:block; }.sidebar { position:absolute; z-index:1000; width:100%; max-height:72dvh; padding:22px 18px 16px; transform:translateY(calc(-100% + 55px)); transition:transform .25s ease; }.sidebar.is-open { transform:translateY(0); }
-  .sidebar h1 { font-size:35px; }.filters { grid-template-columns:1fr 1fr; margin:18px 0 12px; }.filter { padding:7px; }.recommendation-list { flex:none; max-height:250px; }.sidebar-footer { display:none; }
-  .map-panel, #map { height:100dvh; } #mobile-toggle { display:block; position:absolute; z-index:1001; top:11px; right:12px; padding:9px 12px; border:1px solid var(--line); border-radius:7px; color:var(--ink); background:#fffdf8; box-shadow:0 2px 10px #392f1c22; font:600 11px Manrope,sans-serif; }.map-actions { top:59px; right:12px; }.map-key { right:10px; bottom:15px; }
+@media (max-width:900px) {
+  .app-shell { display:block; }.sidebar { position:absolute; z-index:1000; inset:auto 0 0; width:100%; height:min(84dvh,700px); padding:24px 18px 16px; border-radius:18px 18px 0 0; transform:translateY(100%); transition:transform .25s ease; }.sidebar.is-open { transform:translateY(0); }
+  .sidebar h1 { font-size:35px; }.filters { grid-template-columns:1fr 1fr; margin:18px 0 12px; }.filter { padding:7px; }.recommendation-list { flex:1; max-height:none; }.sidebar-footer { display:none; }
+  .map-panel, #map { height:100dvh; } #mobile-toggle { display:block; position:absolute; z-index:1001; right:12px; bottom:16px; padding:9px 12px; border:1px solid var(--line); border-radius:7px; color:var(--ink); background:#fffdf8; box-shadow:0 2px 10px #392f1c22; font:600 11px Manrope,sans-serif; }.map-actions { top:12px; right:12px; }.map-key { right:10px; bottom:64px; }
 }

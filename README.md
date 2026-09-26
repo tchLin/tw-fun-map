@@ -19,7 +19,7 @@ Open `recommendations.js` and add objects to the `recommendations` array. There 
 }
 ```
 
-For food, add `where` to list venues. Each venue with coordinates appears as an extra map pin:
+For food, add `where` to list venues. Food and drink stay in the list rather than adding potentially confusing map pins:
 
 ```js
 {
@@ -43,7 +43,20 @@ For a chain with many branches, use a Google Maps search instead of one coordina
   city: "Taiwan",
   mapsQuery: "50嵐 Taiwan",
   nearest: true,
-  chain: true, // keeps a multi-branch chain off the map
+}
+```
+
+Places can include a small list of suggestions for the location itself:
+
+```js
+{
+  type: "place",
+  title: "Taipei 101",
+  city: "Taipei",
+  thingsToDo: [
+    { title: "Visit the observatory", note: "Best on a clear day." },
+    { title: "Browse the design shops" },
+  ],
 }
 ```
 

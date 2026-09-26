@@ -34,6 +34,7 @@ function escapeHtml(value = "") {
 }
 
 function locationsFor(item) {
+  if (item.type === "food") return [];
   const direct = item.coordinates && !item.chain ? [{ name: item.title, city: item.city, coordinates: item.coordinates }] : [];
   const venues = (item.where || []).filter((spot) => spot.coordinates && !spot.chain);
   return [...direct, ...venues];
@@ -72,16 +73,25 @@ function venueLinks(item) {
   return `<div class="card-venues"><span>Try it at</span><div>${item.where.map((spot) => `<a class="venue-link" href="${googleMapsUrl(item, spot)}" target="_blank" rel="noopener noreferrer">${escapeHtml(spot.name)} <small>${spot.nearest ? "Find nearby" : "Directions"} ↗</small></a>`).join("")}</div></div>`;
 }
 
+function thingsToDo(item) {
+  if (!item.thingsToDo?.length) return "";
+  const entries = item.thingsToDo.map((entry) => {
+    const activity = typeof entry === "string" ? { title: entry } : entry;
+    return `<li><b>${escapeHtml(activity.title)}</b>${activity.note ? `<span>${escapeHtml(activity.note)}</span>` : ""}</li>`;
+  }).join("");
+  return `<div class="things-to-do"><span>Do while you’re here</span><ul>${entries}</ul></div>`;
+}
+
 function popup(item, location) {
   const locationLine = location.name === item.title ? "" : `<p class="popup-location">Try it at ${escapeHtml(location.name)} · ${escapeHtml(location.city)}</p>`;
   const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)} ${mapsLink(item, spot, spot.nearest ? "Find nearby" : "Map")}</span>`).join("")}</div>` : "";
   const alternative = item.alternative ? `<div class="popup-alternative"><b>Try this instead</b><span>${escapeHtml(item.alternative)}</span></div>` : "";
-  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${ratingStars(item.rating)}${locationLine}<p>${escapeHtml(item.description || "")}</p>${alternative}${where}${mapsLink(item, location)}</article>`;
+  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${ratingStars(item.rating)}${locationLine}<p>${escapeHtml(item.description || "")}</p>${thingsToDo(item)}${alternative}${where}${mapsLink(item, location)}</article>`;
 }
 
 function matches(item) {
   const query = search.value.trim().toLowerCase();
-  const searchable = [item.title, item.city, item.description, ...(item.tags || []), ...(item.where || []).flatMap((spot) => [spot.name, spot.city])].join(" ").toLowerCase();
+  const searchable = [item.title, item.city, item.description, ...(item.tags || []), ...(item.where || []).flatMap((spot) => [spot.name, spot.city]), ...(item.thingsToDo || []).flatMap((entry) => typeof entry === "string" ? [entry] : [entry.title, entry.note])].join(" ").toLowerCase();
   return (activeFilter === "all" || item.type === activeFilter) && (!query || searchable.includes(query));
 }
 
@@ -105,7 +115,7 @@ function render() {
     const location = locationsFor(item)[0];
     const actions = document.createElement("div");
     actions.className = "card-actions";
-    actions.innerHTML = `${venueLinks(item)}${item.type === "food" && item.where?.length ? "" : mapsLink(item, location, "Open in Google Maps")}`;
+    actions.innerHTML = `${thingsToDo(item)}${venueLinks(item)}${item.type === "food" && item.where?.length ? "" : mapsLink(item, location, "Open in Google Maps")}`;
     card.append(actions);
     list.append(card);
     locationsFor(item).forEach((location) => {
@@ -127,7 +137,13 @@ document.querySelectorAll(".filter").forEach((button) => button.addEventListener
   render();
 }));
 search.addEventListener("input", render);
-document.querySelector("#mobile-toggle").addEventListener("click", () => document.querySelector(".sidebar").classList.toggle("is-open"));
+const sidebar = document.querySelector(".sidebar");
+const mobileToggle = document.querySelector("#mobile-toggle");
+mobileToggle.addEventListener("click", () => {
+  const isOpen = sidebar.classList.toggle("is-open");
+  mobileToggle.setAttribute("aria-expanded", String(isOpen));
+  mobileToggle.textContent = isOpen ? "View map" : "Browse recommendations";
+});
 
 function restoreTaiwanView() {
   map.setMaxBounds(taiwanBounds.pad(0.2));
