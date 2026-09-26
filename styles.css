@@ -45,6 +45,7 @@ h1 em { color:var(--pink); }
 .custom-pin-wrap { background:transparent; border:0; }
 .map-marker { display:grid; width:34px; height:34px; place-items:center; border:3px solid white; border-radius:50% 50% 50% 0; transform:rotate(-45deg); color:white; background:var(--pink); box-shadow:0 2px 8px #34403c55; font-size:16px; }
 .map-marker span { transform:rotate(45deg); }.map-marker.food { color:#493405; background:var(--yellow); }
+.map-marker.easter-egg { color:#5b4104; background:#f4c64f; box-shadow:0 2px 10px #9c741a77; }
 .leaflet-popup-content-wrapper { border-radius:10px; }.leaflet-popup-content { margin:15px 17px; }
 .popup h2 { margin:3px 0 6px; font:600 20px/1.05 Fraunces,Georgia,serif; }.popup p:not(.popup-type) { margin:0; color:#606863; font-size:12px; line-height:1.5; }
 .popup .rating { display:block; margin:-1px 0 7px; }

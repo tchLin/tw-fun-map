@@ -72,3 +72,12 @@ const recommendations = [
     description: "A spacious museum-and-park area for a slower afternoon.", tags: ["art", "park", "relaxed"],
   },
 ];
+
+// Map-only surprises: these intentionally never appear in the guide list.
+const mapEasterEggs = [
+  {
+    coordinates: [22.6625, 120.287],
+    title: "A tiny secret ✦",
+    message: "You found the mapmaker’s hidden star.",
+  },
+];

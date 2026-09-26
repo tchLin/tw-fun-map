@@ -58,6 +58,14 @@ function markerIcon(type) {
   });
 }
 
+function easterEggIcon() {
+  return L.divIcon({
+    className: "custom-pin-wrap",
+    html: '<div class="map-marker easter-egg"><span>★</span></div>',
+    iconSize: [34, 34], iconAnchor: [17, 30], popupAnchor: [0, -30],
+  });
+}
+
 function ratingStars(rating) {
   const value = Number.isInteger(rating) && rating >= 1 && rating <= 5 ? rating : null;
   if (!value) return "";
@@ -131,6 +139,11 @@ function render() {
       const marker = L.marker(location.coordinates, { icon: markerIcon(item.type), title: item.title }).bindPopup(popup(item, location), { maxWidth: 260 }).addTo(markers);
       if (!markerByItemId.has(item.id)) markerByItemId.set(item.id, marker);
     });
+  });
+  mapEasterEggs.forEach((egg) => {
+    L.marker(egg.coordinates, { icon: easterEggIcon(), title: egg.title })
+      .bindPopup(`<article class="popup easter-egg-popup"><h2>${escapeHtml(egg.title)}</h2><p>${escapeHtml(egg.message)}</p></article>`, { maxWidth: 220 })
+      .addTo(markers);
   });
 }
 
