@@ -29,9 +29,11 @@ const markers = L.layerGroup().addTo(map);
 const markerByItemId = new Map();
 const list = document.querySelector("#recommendation-list");
 const search = document.querySelector("#search");
+const cityFilter = document.querySelector("#city-filter");
 const locateButton = document.querySelector("#locate-me");
 const taiwanViewButton = document.querySelector("#taiwan-view");
 let activeFilter = "all";
+let activeCity = "all";
 let userMarker;
 let accuracyCircle;
 
@@ -103,7 +105,7 @@ function popup(item, location) {
 function matches(item) {
   const query = search.value.trim().toLowerCase();
   const searchable = [item.title, item.city, item.description, ...(item.tags || []), ...(item.where || []).flatMap((spot) => [spot.name, spot.city]), ...(item.thingsToDo || []).flatMap((entry) => typeof entry === "string" ? [entry] : [entry.title, entry.note])].join(" ").toLowerCase();
-  return (activeFilter === "all" || item.type === activeFilter) && (!query || searchable.includes(query));
+  return (activeFilter === "all" || item.type === activeFilter) && (activeCity === "all" || item.city === activeCity) && (!query || searchable.includes(query));
 }
 
 function focusItem(item) {
@@ -166,6 +168,16 @@ document.querySelectorAll(".language-switch button").forEach((button) => button.
   document.querySelectorAll(".language-switch button").forEach((item) => item.classList.toggle("is-active", item === button));
 }));
 search.addEventListener("input", render);
+Array.from(new Set(recommendations.map((item) => item.city))).sort().forEach((city) => {
+  const option = document.createElement("option");
+  option.value = city;
+  option.textContent = city;
+  cityFilter.append(option);
+});
+cityFilter.addEventListener("change", () => {
+  activeCity = cityFilter.value;
+  render();
+});
 const sidebar = document.querySelector(".sidebar");
 const mobileToggle = document.querySelector("#mobile-toggle");
 mobileToggle.addEventListener("click", () => {

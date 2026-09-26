@@ -24,6 +24,12 @@
           <button class="filter" data-filter="food"><span>✱</span> Food to try <b id="food-count"></b></button>
           <button class="filter" data-filter="pass"><span>↝</span> Worth a pass <b id="pass-count"></b></button>
         </nav>
+        <div class="city-filter">
+          <label for="city-filter">City</label>
+          <select id="city-filter">
+            <option value="all">All cities</option>
+          </select>
+        </div>
         <label class="search-label" for="search">Find a recommendation</label>
         <input id="search" type="search" placeholder="Try “night market”" autocomplete="off" />
         <section class="recommendation-list" id="recommendation-list" aria-live="polite"></section>
