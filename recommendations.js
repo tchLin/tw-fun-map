@@ -1,6 +1,7 @@
 /* Add recommendations here. Use type: "place", "activity", "food", or "pass".
    coordinates are [latitude, longitude] and are optional for city-only ideas.
    Food can have a "where" array; venues with coordinates become map pins.
+   Use rating: 1–5 to mark how must-go a positive recommendation is.
    A "pass" can include an "alternative" with a kinder suggestion. */
 const recommendations = [
   {
@@ -10,6 +11,7 @@ const recommendations = [
     city: "Taipei",
     coordinates: [25.0339, 121.5645],
     description: "Start here while you build your own Taiwan guide.",
+    rating: 5,
     tags: ["view", "landmark"],
   },
   {
@@ -19,6 +21,7 @@ const recommendations = [
     city: "Taipei",
     coordinates: [25.0878, 121.525],
     description: "An example of an activity tied to a city.",
+    rating: 4,
     tags: ["evening", "local life"],
   },
   {
@@ -27,6 +30,7 @@ const recommendations = [
     title: "Bubble tea",
     city: "Taiwan",
     description: "A food recommendation can be broad and list places to get it.",
+    rating: 5,
     tags: ["drink", "sweet"],
     where: [{ name: "Add your favorite boba shop", city: "Taipei", coordinates: [25.0478, 121.517] }],
   },

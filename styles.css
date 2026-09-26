@@ -27,6 +27,8 @@ h1 em { color:var(--pink); }
 .pass .card-icon { background:#77727a; }
 .recommendation-card small, .recommendation-card strong, .recommendation-card em { display:block; }
 .recommendation-card strong { margin:3px 0; font:700 13px Manrope,sans-serif; }
+.rating { display:inline-block; margin:0 0 4px; color:#d6d1c4; font:12px/1 sans-serif; letter-spacing:1px; white-space:nowrap; }
+.rating b { color:var(--yellow); font-weight:normal; }
 .recommendation-card em { overflow:hidden; color:#6c716d; font:11px/1.35 Manrope,sans-serif; font-style:normal; white-space:nowrap; text-overflow:ellipsis; }
 .empty { color:#69706b; font-size:13px; }
 .sidebar-footer { margin:15px 0 0; color:#92958c; font:10px "DM Mono",monospace; }
@@ -41,6 +43,7 @@ h1 em { color:var(--pink); }
 .map-marker span { transform:rotate(45deg); }.map-marker.activity { background:var(--blue); }.map-marker.food { color:#493405; background:var(--yellow); }.map-marker.pass { background:#77727a; }
 .leaflet-popup-content-wrapper { border-radius:10px; }.leaflet-popup-content { margin:15px 17px; }
 .popup h2 { margin:3px 0 6px; font:600 20px/1.05 Fraunces,Georgia,serif; }.popup p:not(.popup-type) { margin:0; color:#606863; font-size:12px; line-height:1.5; }
+.popup .rating { display:block; margin:-1px 0 7px; }
 .popup-location { color:var(--blue)!important; font-size:11px!important; }.popup-where, .popup-alternative { display:grid; gap:3px; margin-top:10px; padding-top:9px; border-top:1px solid var(--line); color:#626b66; font-size:11px; }.popup-where b, .popup-alternative b { color:var(--ink); font-size:11px; }.popup-alternative b { color:#5d5664; }
 #mobile-toggle { display:none; }
 @media (max-width:720px) {
