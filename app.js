@@ -21,7 +21,11 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const markers = L.layerGroup().addTo(map);
 const list = document.querySelector("#recommendation-list");
 const search = document.querySelector("#search");
+const locateButton = document.querySelector("#locate-me");
+const taiwanViewButton = document.querySelector("#taiwan-view");
 let activeFilter = "all";
+let userMarker;
+let accuracyCircle;
 
 function escapeHtml(value = "") {
   const div = document.createElement("div");
@@ -30,8 +34,9 @@ function escapeHtml(value = "") {
 }
 
 function locationsFor(item) {
-  const direct = item.coordinates ? [{ name: item.title, city: item.city, coordinates: item.coordinates }] : [];
-  return [...direct, ...(item.where || []).filter((spot) => spot.coordinates)];
+  const direct = item.coordinates && !item.chain ? [{ name: item.title, city: item.city, coordinates: item.coordinates }] : [];
+  const venues = (item.where || []).filter((spot) => spot.coordinates && !spot.chain);
+  return [...direct, ...venues];
 }
 
 function markerIcon(type) {
@@ -123,5 +128,46 @@ document.querySelectorAll(".filter").forEach((button) => button.addEventListener
 }));
 search.addEventListener("input", render);
 document.querySelector("#mobile-toggle").addEventListener("click", () => document.querySelector(".sidebar").classList.toggle("is-open"));
+
+function restoreTaiwanView() {
+  map.setMaxBounds(taiwanBounds.pad(0.2));
+  map.fitBounds(taiwanBounds, { padding: [28, 28] });
+  taiwanViewButton.hidden = true;
+}
+
+locateButton.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    locateButton.textContent = "Location unavailable";
+    return;
+  }
+  locateButton.disabled = true;
+  locateButton.textContent = "Finding you…";
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => {
+      const point = [coords.latitude, coords.longitude];
+      if (userMarker) {
+        userMarker.setLatLng(point);
+        accuracyCircle.setLatLng(point).setRadius(coords.accuracy);
+      } else {
+        accuracyCircle = L.circle(point, { radius: coords.accuracy, color: "#2585a4", weight: 1, fillColor: "#2585a4", fillOpacity: 0.12, interactive: false }).addTo(map);
+        userMarker = L.circleMarker(point, { radius: 8, color: "#fff", weight: 3, fillColor: "#2585a4", fillOpacity: 1 }).bindPopup("You are here").addTo(map);
+      }
+      if (!taiwanBounds.pad(0.2).contains(point)) {
+        map.setMaxBounds(null);
+        taiwanViewButton.hidden = false;
+      }
+      map.flyTo(point, 13, { duration: 0.75 });
+      userMarker.openPopup();
+      locateButton.disabled = false;
+      locateButton.textContent = "⌖ Location shown";
+    },
+    () => {
+      locateButton.disabled = false;
+      locateButton.textContent = "Location blocked";
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
+  );
+});
+taiwanViewButton.addEventListener("click", restoreTaiwanView);
 updateCounts();
 render();

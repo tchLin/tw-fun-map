@@ -43,8 +43,11 @@ For a chain with many branches, use a Google Maps search instead of one coordina
   city: "Taiwan",
   mapsQuery: "50嵐 Taiwan",
   nearest: true,
+  chain: true, // keeps a multi-branch chain off the map
 }
 ```
+
+The map has a **Locate me** control. It asks the visitor’s browser for permission only after they click it, then shows an accuracy circle around their reported location.
 
 For an idea associated only with a city, omit `coordinates`. It will stay in the filtered list and zoom to the city when selected.
 
