@@ -1,6 +1,8 @@
 # Taiwan, recommended
 
-A no-build, static map that can be hosted on GitHub Pages. It uses Leaflet and OpenStreetMap tiles loaded from CDNs, so there is nothing to install or compile.
+A no-build, static map that can be hosted on GitHub Pages. It uses Leaflet plus Esri and OpenStreetMap tile layers loaded from CDNs, so there is nothing to install or compile.
+
+Map labels default to English. Friends can use the `EN / 中文` switch to use the Chinese-labelled OpenStreetMap view instead.
 
 ## Add recommendations
 

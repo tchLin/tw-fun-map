@@ -13,10 +13,17 @@ const map = L.map("map", {
   maxBoundsViscosity: 1,
 }).fitBounds(taiwanBounds, { padding: [28, 28] });
 L.control.zoom({ position: "bottomright" }).addTo(map);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
+const baseLayers = {
+  en: L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 19,
+    attribution: "Tiles &copy; Esri",
+  }),
+  zh: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }),
+};
+let activeBaseLayer = baseLayers.en.addTo(map);
 
 const markers = L.layerGroup().addTo(map);
 const list = document.querySelector("#recommendation-list");
@@ -135,6 +142,14 @@ document.querySelectorAll(".filter").forEach((button) => button.addEventListener
   activeFilter = button.dataset.filter;
   document.querySelectorAll(".filter").forEach((item) => item.classList.toggle("is-active", item === button));
   render();
+}));
+document.querySelectorAll(".language-switch button").forEach((button) => button.addEventListener("click", () => {
+  const nextLayer = baseLayers[button.dataset.language];
+  if (nextLayer === activeBaseLayer) return;
+  map.removeLayer(activeBaseLayer);
+  nextLayer.addTo(map);
+  activeBaseLayer = nextLayer;
+  document.querySelectorAll(".language-switch button").forEach((item) => item.classList.toggle("is-active", item === button));
 }));
 search.addEventListener("input", render);
 const sidebar = document.querySelector(".sidebar");
