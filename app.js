@@ -1,0 +1,87 @@
+const typeLabels = { place: "Place to go", activity: "Thing to do", food: "Food to try" };
+const typeIcons = { place: "⌂", activity: "◌", food: "✱" };
+const cityCoordinates = {
+  Taipei: [25.033, 121.565], Taichung: [24.1477, 120.6736], Tainan: [22.9999, 120.2269],
+  Kaohsiung: [22.6273, 120.3014], Hualien: [23.9911, 121.6112], Taiwan: [23.7, 121],
+};
+
+const map = L.map("map", { zoomControl: false, minZoom: 7 }).setView([23.75, 121], 8);
+L.control.zoom({ position: "bottomright" }).addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+const markers = L.layerGroup().addTo(map);
+const list = document.querySelector("#recommendation-list");
+const search = document.querySelector("#search");
+let activeFilter = "all";
+
+function escapeHtml(value = "") {
+  const div = document.createElement("div");
+  div.textContent = value;
+  return div.innerHTML;
+}
+
+function locationsFor(item) {
+  const direct = item.coordinates ? [{ name: item.title, city: item.city, coordinates: item.coordinates }] : [];
+  return [...direct, ...(item.where || []).filter((spot) => spot.coordinates)];
+}
+
+function markerIcon(type) {
+  return L.divIcon({
+    className: "custom-pin-wrap",
+    html: `<div class="map-marker ${type}"><span>${typeIcons[type]}</span></div>`,
+    iconSize: [34, 34], iconAnchor: [17, 30], popupAnchor: [0, -30],
+  });
+}
+
+function popup(item, location) {
+  const locationLine = location.name === item.title ? "" : `<p class="popup-location">Try it at ${escapeHtml(location.name)} · ${escapeHtml(location.city)}</p>`;
+  const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)}</span>`).join("")}</div>` : "";
+  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${locationLine}<p>${escapeHtml(item.description || "")}</p>${where}</article>`;
+}
+
+function matches(item) {
+  const query = search.value.trim().toLowerCase();
+  const searchable = [item.title, item.city, item.description, ...(item.tags || []), ...(item.where || []).flatMap((spot) => [spot.name, spot.city])].join(" ").toLowerCase();
+  return (activeFilter === "all" || item.type === activeFilter) && (!query || searchable.includes(query));
+}
+
+function focusItem(item) {
+  const location = locationsFor(item)[0];
+  map.flyTo(location?.coordinates || cityCoordinates[item.city] || cityCoordinates.Taiwan, location ? 13 : 8, { duration: 0.75 });
+}
+
+function render() {
+  markers.clearLayers();
+  const visible = recommendations.filter(matches);
+  list.innerHTML = visible.length ? "" : '<p class="empty">No matches yet. Try a different search.</p>';
+  visible.forEach((item) => {
+    const card = document.createElement("button");
+    card.className = `recommendation-card ${item.type}`;
+    card.innerHTML = `<span class="card-icon">${typeIcons[item.type]}</span><span><small>${typeLabels[item.type]} · ${escapeHtml(item.city)}</small><strong>${escapeHtml(item.title)}</strong><em>${escapeHtml(item.description || "Add a note")}</em></span>`;
+    card.addEventListener("click", () => focusItem(item));
+    list.append(card);
+    locationsFor(item).forEach((location) => {
+      L.marker(location.coordinates, { icon: markerIcon(item.type), title: item.title }).bindPopup(popup(item, location), { maxWidth: 260 }).addTo(markers);
+    });
+  });
+}
+
+function updateCounts() {
+  document.querySelector("#all-count").textContent = recommendations.length;
+  ["place", "activity", "food"].forEach((type) => {
+    document.querySelector(`#${type}-count`).textContent = recommendations.filter((item) => item.type === type).length;
+  });
+}
+
+document.querySelectorAll(".filter").forEach((button) => button.addEventListener("click", () => {
+  activeFilter = button.dataset.filter;
+  document.querySelectorAll(".filter").forEach((item) => item.classList.toggle("is-active", item === button));
+  render();
+}));
+search.addEventListener("input", render);
+document.querySelector("#mobile-toggle").addEventListener("click", () => document.querySelector(".sidebar").classList.toggle("is-open"));
+updateCounts();
+render();
