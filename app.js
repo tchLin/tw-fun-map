@@ -45,14 +45,25 @@ function markerIcon(type) {
 function ratingStars(rating) {
   const value = Number.isInteger(rating) && rating >= 1 && rating <= 5 ? rating : null;
   if (!value) return "";
-  return `<span class="rating" aria-label="${value} out of 5 must-go rating" title="${value} out of 5 must-go"><b>${"★".repeat(value)}</b>${"★".repeat(5 - value)}</span>`;
+  return `<span class="rating" aria-label="${value} out of 5 must-go rating" title="${value} out of 5 must-go"><span>Must-go</span><b>${"★".repeat(value)}</b>${"★".repeat(5 - value)}</span>`;
+}
+
+function googleMapsUrl(item, location) {
+  const destination = location?.coordinates
+    ? location.coordinates.join(",")
+    : `${location?.name || item.title}, ${location?.city || item.city}, Taiwan`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+}
+
+function mapsLink(item, location, label = "Directions") {
+  return `<a class="maps-link" href="${googleMapsUrl(item, location)}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`;
 }
 
 function popup(item, location) {
   const locationLine = location.name === item.title ? "" : `<p class="popup-location">Try it at ${escapeHtml(location.name)} · ${escapeHtml(location.city)}</p>`;
-  const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)}</span>`).join("")}</div>` : "";
+  const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)} ${mapsLink(item, spot, "Map")}</span>`).join("")}</div>` : "";
   const alternative = item.alternative ? `<div class="popup-alternative"><b>Try this instead</b><span>${escapeHtml(item.alternative)}</span></div>` : "";
-  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${ratingStars(item.rating)}${locationLine}<p>${escapeHtml(item.description || "")}</p>${alternative}${where}</article>`;
+  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${ratingStars(item.rating)}${locationLine}<p>${escapeHtml(item.description || "")}</p>${alternative}${where}${mapsLink(item, location)}</article>`;
 }
 
 function matches(item) {
@@ -71,10 +82,18 @@ function render() {
   const visible = recommendations.filter(matches);
   list.innerHTML = visible.length ? "" : '<p class="empty">No matches yet. Try a different search.</p>';
   visible.forEach((item) => {
-    const card = document.createElement("button");
+    const card = document.createElement("article");
     card.className = `recommendation-card ${item.type}`;
-    card.innerHTML = `<span class="card-icon">${typeIcons[item.type]}</span><span><small>${typeLabels[item.type]} · ${escapeHtml(item.city)}</small><strong>${escapeHtml(item.title)}</strong>${ratingStars(item.rating)}<em>${escapeHtml(item.description || "Add a note")}</em></span>`;
-    card.addEventListener("click", () => focusItem(item));
+    const primary = document.createElement("button");
+    primary.className = "card-main";
+    primary.innerHTML = `<span class="card-icon">${typeIcons[item.type]}</span><span class="card-copy"><small>${typeLabels[item.type]} · ${escapeHtml(item.city)}</small><strong>${escapeHtml(item.title)}</strong>${ratingStars(item.rating)}<em>${escapeHtml(item.description || "Add a note")}</em></span>`;
+    primary.addEventListener("click", () => focusItem(item));
+    card.append(primary);
+    const location = locationsFor(item)[0];
+    const actions = document.createElement("div");
+    actions.className = "card-actions";
+    actions.innerHTML = mapsLink(item, location, "Open in Google Maps");
+    card.append(actions);
     list.append(card);
     locationsFor(item).forEach((location) => {
       L.marker(location.coordinates, { icon: markerIcon(item.type), title: item.title }).bindPopup(popup(item, location), { maxWidth: 260 }).addTo(markers);

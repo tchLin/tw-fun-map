@@ -19,17 +19,21 @@ h1 em { color:var(--pink); }
 #search { width:100%; padding:11px 13px; border:1px solid var(--line); border-radius:8px; outline:none; color:var(--ink); background:white; font:13px Manrope,sans-serif; }
 #search:focus { border-color:var(--blue); box-shadow:0 0 0 3px #3c96b722; }
 .recommendation-list { display:grid; gap:8px; min-height:0; margin-top:17px; overflow-y:auto; padding-right:3px; }
-.recommendation-card { display:flex; gap:11px; padding:12px; border:1px solid var(--line); border-radius:9px; color:inherit; background:#fffdf8; text-align:left; cursor:pointer; transition:transform .15s,box-shadow .15s; }
+.recommendation-card { overflow:hidden; border:1px solid var(--line); border-radius:9px; color:inherit; background:#fffdf8; transition:transform .15s,box-shadow .15s; }
 .recommendation-card:hover { transform:translateY(-2px); box-shadow:0 5px 15px #47371312; }
+.card-main { display:flex; gap:11px; width:100%; padding:12px 12px 7px; border:0; color:inherit; background:transparent; text-align:left; cursor:pointer; font:inherit; }
+.card-copy { min-width:0; }
 .card-icon { flex:0 0 28px; height:28px; padding-top:4px; border-radius:50%; color:white; background:var(--pink); text-align:center; }
 .activity .card-icon { background:var(--blue); }
 .food .card-icon { color:#493405; background:var(--yellow); }
 .pass .card-icon { background:#77727a; }
 .recommendation-card small, .recommendation-card strong, .recommendation-card em { display:block; }
 .recommendation-card strong { margin:3px 0; font:700 13px Manrope,sans-serif; }
-.rating { display:inline-block; margin:0 0 4px; color:#d6d1c4; font:12px/1 sans-serif; letter-spacing:1px; white-space:nowrap; }
+.rating { display:block; margin:0 0 5px; color:#d6d1c4; font:12px/1 sans-serif; letter-spacing:1px; white-space:nowrap; }
+.rating > span { margin-right:5px; color:#8a8b83; font:500 9px "DM Mono",monospace; letter-spacing:.04em; text-transform:uppercase; }
 .rating b { color:var(--yellow); font-weight:normal; }
-.recommendation-card em { overflow:hidden; color:#6c716d; font:11px/1.35 Manrope,sans-serif; font-style:normal; white-space:nowrap; text-overflow:ellipsis; }
+.recommendation-card em { display:-webkit-box; overflow:hidden; color:#6c716d; font:11px/1.4 Manrope,sans-serif; font-style:normal; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+.card-actions { padding:0 12px 11px 51px; }.maps-link { display:inline-flex; align-items:center; gap:3px; color:#1d718f; font:600 10px Manrope,sans-serif; text-decoration:none; }.maps-link:hover { color:#15566c; text-decoration:underline; }.maps-link span { font-size:12px; }
 .empty { color:#69706b; font-size:13px; }
 .sidebar-footer { margin:15px 0 0; color:#92958c; font:10px "DM Mono",monospace; }
 .map-panel, #map { height:100%; }
