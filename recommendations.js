@@ -1,6 +1,7 @@
-/* Add recommendations here. Use type: "place", "activity", or "food".
+/* Add recommendations here. Use type: "place", "activity", "food", or "pass".
    coordinates are [latitude, longitude] and are optional for city-only ideas.
-   Food can have a "where" array; venues with coordinates become map pins. */
+   Food can have a "where" array; venues with coordinates become map pins.
+   A "pass" can include an "alternative" with a kinder suggestion. */
 const recommendations = [
   {
     id: "taipei-101",
@@ -28,5 +29,14 @@ const recommendations = [
     description: "A food recommendation can be broad and list places to get it.",
     tags: ["drink", "sweet"],
     where: [{ name: "Add your favorite boba shop", city: "Taipei", coordinates: [25.0478, 121.517] }],
+  },
+  {
+    id: "example-pass",
+    type: "pass",
+    title: "An example: a tourist trap",
+    city: "Taipei",
+    description: "Use this category for a friendly heads-up, not a harsh review.",
+    alternative: "Your favorite quieter neighborhood or better alternative",
+    tags: ["good to know"],
   },
 ];

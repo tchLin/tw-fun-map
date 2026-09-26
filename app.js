@@ -1,11 +1,17 @@
-const typeLabels = { place: "Place to go", activity: "Thing to do", food: "Food to try" };
-const typeIcons = { place: "⌂", activity: "◌", food: "✱" };
+const typeLabels = { place: "Place to go", activity: "Thing to do", food: "Food to try", pass: "Worth a pass" };
+const typeIcons = { place: "⌂", activity: "◌", food: "✱", pass: "↝" };
 const cityCoordinates = {
   Taipei: [25.033, 121.565], Taichung: [24.1477, 120.6736], Tainan: [22.9999, 120.2269],
   Kaohsiung: [22.6273, 120.3014], Hualien: [23.9911, 121.6112], Taiwan: [23.7, 121],
 };
 
-const map = L.map("map", { zoomControl: false, minZoom: 7 }).setView([23.75, 121], 8);
+const taiwanBounds = L.latLngBounds([21.7, 119.9], [25.4, 122.2]);
+const map = L.map("map", {
+  zoomControl: false,
+  minZoom: 7,
+  maxBounds: taiwanBounds.pad(0.2),
+  maxBoundsViscosity: 1,
+}).fitBounds(taiwanBounds, { padding: [28, 28] });
 L.control.zoom({ position: "bottomright" }).addTo(map);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -39,7 +45,8 @@ function markerIcon(type) {
 function popup(item, location) {
   const locationLine = location.name === item.title ? "" : `<p class="popup-location">Try it at ${escapeHtml(location.name)} · ${escapeHtml(location.city)}</p>`;
   const where = item.where?.length ? `<div class="popup-where"><b>Where to get it</b>${item.where.map((spot) => `<span>${escapeHtml(spot.name)} · ${escapeHtml(spot.city)}</span>`).join("")}</div>` : "";
-  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${locationLine}<p>${escapeHtml(item.description || "")}</p>${where}</article>`;
+  const alternative = item.alternative ? `<div class="popup-alternative"><b>Try this instead</b><span>${escapeHtml(item.alternative)}</span></div>` : "";
+  return `<article class="popup"><p class="popup-type">${typeLabels[item.type]}</p><h2>${escapeHtml(item.title)}</h2>${locationLine}<p>${escapeHtml(item.description || "")}</p>${alternative}${where}</article>`;
 }
 
 function matches(item) {
@@ -71,7 +78,7 @@ function render() {
 
 function updateCounts() {
   document.querySelector("#all-count").textContent = recommendations.length;
-  ["place", "activity", "food"].forEach((type) => {
+  ["place", "activity", "food", "pass"].forEach((type) => {
     document.querySelector(`#${type}-count`).textContent = recommendations.filter((item) => item.type === type).length;
   });
 }

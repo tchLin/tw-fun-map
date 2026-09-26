@@ -4,12 +4,12 @@ A no-build, static map that can be hosted on GitHub Pages. It uses Leaflet and O
 
 ## Add recommendations
 
-Open `recommendations.js` and add objects to the `recommendations` array. There are three supported types:
+Open `recommendations.js` and add objects to the `recommendations` array. There are four supported types:
 
 ```js
 {
   id: "unique-id",
-  type: "place", // "place", "activity", or "food"
+  type: "place", // "place", "activity", "food", or "pass"
   title: "A great place",
   city: "Hualien",
   coordinates: [23.9911, 121.6112], // latitude, longitude; optional
@@ -35,6 +35,19 @@ For food, add `where` to list venues. Each venue with coordinates appears as an 
 ```
 
 For an idea associated only with a city, omit `coordinates`. It will stay in the filtered list and zoom to the city when selected.
+
+Use `type: "pass"` for a friendly heads-up (the 避雷 list). Include `alternative` when you have a better option to suggest:
+
+```js
+{
+  id: "example-pass",
+  type: "pass",
+  title: "An overpriced tourist stop",
+  city: "Tainan",
+  description: "Fine if you are nearby, but not worth a special trip.",
+  alternative: "Go to your favorite local market instead.",
+}
+```
 
 ## Publish on GitHub Pages
 
