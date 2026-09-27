@@ -52,7 +52,7 @@ The map has a **Locate me** control. It asks the visitor’s browser for permiss
 
 For an idea associated only with a city, omit `coordinates`. It will stay in the filtered list and zoom to the city when selected.
 
-Every recommendation gets an **Open in Google Maps** link automatically. Coordinates make that link open navigation to the exact point; entries without coordinates search for the title and city instead.
+Every recommendation gets an **Open in Google Maps** link automatically. It opens the location’s Google Maps page, using exact coordinates when available; entries without coordinates search for the title and city instead.
 
 ## Publish on GitHub Pages
 

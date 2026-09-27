@@ -73,17 +73,17 @@ function googleMapsUrl(item, location) {
   const destination = location?.coordinates
     ? location.coordinates.join(",")
     : `${location?.name || item.title}, ${location?.city || item.city}, Taiwan`;
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination)}`;
 }
 
 function mapsLink(item, location, label) {
-  const action = label || (location?.mapsQuery ? "View in Google Maps" : "Directions");
+  const action = label || "View in Google Maps";
   return `<a class="maps-link" href="${googleMapsUrl(item, location)}" target="_blank" rel="noopener noreferrer">${action} <span aria-hidden="true">↗</span></a>`;
 }
 
 function venueLinks(item) {
   if (item.type !== "food" || !item.where?.length) return "";
-  return `<div class="card-venues"><span>Try it at</span><div>${item.where.map((spot) => `<a class="venue-link" href="${googleMapsUrl(item, spot)}" target="_blank" rel="noopener noreferrer">${escapeHtml(spot.name)} <small>${spot.nearest ? "Find nearby" : "Directions"} ↗</small></a>`).join("")}</div></div>`;
+  return `<div class="card-venues"><span>Try it at</span><div>${item.where.map((spot) => `<a class="venue-link" href="${googleMapsUrl(item, spot)}" target="_blank" rel="noopener noreferrer">${escapeHtml(spot.name)} <small>${spot.nearest ? "Find nearby" : "View map"} ↗</small></a>`).join("")}</div></div>`;
 }
 
 function popup(item, location) {
