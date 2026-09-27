@@ -70,6 +70,52 @@ const recommendations = [
     id: "kaohsiung-museum-fine-arts-park", type: "place", title: "Kaohsiung Museum of Fine Arts Park 美術館公園", city: "Kaohsiung", coordinates: [22.6527, 120.2868], mapsQuery: "Kaohsiung Museum of Fine Arts Park, Kaohsiung, Taiwan",
     description: "A spacious museum-and-park area for a slower afternoon.", tags: ["art", "park", "relaxed"],
   },
+  {
+    id: "guomao-community", type: "place", title: "Guomao Community 果貿社區", city: "Kaohsiung", coordinates: [22.670, 120.288],
+    description: "A distinctive residential neighborhood with curved, retro architecture.", tags: ["architecture", "neighborhood", "photo"],
+  },
+  {
+    id: "neiwei-arts-center", type: "place", title: "Neiwei Arts Center 內惟藝術中心", city: "Kaohsiung", coordinates: [22.6549, 120.2828],
+    description: "A contemporary arts center beside the Museum of Fine Arts area.", tags: ["art", "museum", "culture"],
+  },
+  {
+    id: "cijin-lighthouse", type: "place", title: "Cijin Lighthouse 旗津燈塔", city: "Kaohsiung", coordinates: [22.6152, 120.265],
+    description: "A hilltop lighthouse with views across the harbor and city.", tags: ["view", "harbor", "sunset"],
+  },
+  {
+    id: "great-harbor-bridge", type: "place", title: "Great Harbor Bridge 大港橋", city: "Kaohsiung", coordinates: [22.6179, 120.2839],
+    description: "A pedestrian bridge and harbor-front landmark near Pier-2.", tags: ["waterfront", "walk", "architecture"],
+  },
+  {
+    id: "fo-guang-shan-buddha-museum", type: "place", title: "Fo Guang Shan Buddha Museum 佛陀紀念館", city: "Kaohsiung", coordinates: [22.7556, 120.4452],
+    description: "A vast Buddhist museum complex in Dashu District.", tags: ["museum", "temple", "day trip"],
+  },
+  {
+    id: "eda-world", type: "place", title: "E-DA World 義大世界", city: "Kaohsiung", coordinates: [22.7295, 120.405], mapsQuery: "E-DA World, Kaohsiung, Taiwan",
+    description: "A large resort, outlet, and amusement-park complex.", tags: ["shopping", "theme park", "day trip"],
+  },
+
+  // Tainan
+  {
+    id: "hayashi-department-store", type: "place", title: "Hayashi Department Store 林百貨", city: "Tainan", coordinates: [22.9917, 120.2025],
+    description: "A restored 1930s department store with local design goods.", tags: ["historic", "shopping", "design"],
+  },
+
+  // Keelung
+  {
+    id: "keelung-miaokou-night-market", type: "place", title: "Keelung Miaokou Night Market 廟口夜市", city: "Keelung", coordinates: [25.1286, 121.7428],
+    description: "A famous snack market centered around Dianji Temple.", tags: ["night market", "food", "night"],
+  },
+
+  // Taipei
+  {
+    id: "taipei-zoo", type: "place", title: "Taipei Zoo 木柵動物園", city: "Taipei", coordinates: [24.9954, 121.5861],
+    description: "Taipei’s large city zoo at the edge of the Maokong area.", tags: ["family", "nature", "day trip"],
+  },
+  {
+    id: "national-palace-museum", type: "place", title: "National Palace Museum 台北故宮", city: "Taipei", coordinates: [25.1016, 121.5489],
+    description: "Taiwan’s landmark museum of Chinese art and imperial collections.", tags: ["museum", "art", "history"],
+  },
 ];
 
 // Map-only surprises: these intentionally never appear in the guide list.
